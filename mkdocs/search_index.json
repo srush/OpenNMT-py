@@ -87,12 +87,12 @@
         }, 
         {
             "location": "/options/preprocess/", 
-            "text": "preprocess.py:\n\n\nusage: preprocess.py [-h] [-md] [-config CONFIG] -train_src TRAIN_SRC\n                     -train_tgt TRAIN_TGT -valid_src VALID_SRC -valid_tgt\n                     VALID_TGT -save_data SAVE_DATA\n                     [-src_vocab_size SRC_VOCAB_SIZE]\n                     [-tgt_vocab_size TGT_VOCAB_SIZE] [-src_vocab SRC_VOCAB]\n                     [-tgt_vocab TGT_VOCAB] [-seq_length SEQ_LENGTH]\n                     [-shuffle SHUFFLE] [-seed SEED] [-lower]\n                     [-report_every REPORT_EVERY]\n\n\n\n\n\npreprocess.py\n\n\noptional arguments\n:\n\n\n-h, --help\n\n\nshow this help message and exit\n\n\n\n\n\n-md\n\n\nprint Markdown-formatted help text and exit.\n\n\n\n\n\n-config CONFIG\n\n\nRead options from this file\n\n\n\n\n\n-train_src TRAIN_SRC\n\n\nPath to the training source data\n\n\n\n\n\n-train_tgt TRAIN_TGT\n\n\nPath to the training target data\n\n\n\n\n\n-valid_src VALID_SRC\n\n\nPath to the validation source data\n\n\n\n\n\n-valid_tgt VALID_TGT\n\n\nPath to the validation target data\n\n\n\n\n\n-save_data SAVE_DATA\n\n\nOutput file for the prepared data\n\n\n\n\n\n-src_vocab_size SRC_VOCAB_SIZE\n\n\nSize of the source vocabulary\n\n\n\n\n\n-tgt_vocab_size TGT_VOCAB_SIZE\n\n\nSize of the target vocabulary\n\n\n\n\n\n-src_vocab SRC_VOCAB\n\n\nPath to an existing source vocabulary\n\n\n\n\n\n-tgt_vocab TGT_VOCAB\n\n\nPath to an existing target vocabulary\n\n\n\n\n\n-seq_length SEQ_LENGTH\n\n\nMaximum sequence length\n\n\n\n\n\n-shuffle SHUFFLE\n\n\nShuffle data\n\n\n\n\n\n-seed SEED\n\n\nRandom seed\n\n\n\n\n\n-lower\n\n\nlowercase data\n\n\n\n\n\n-report_every REPORT_EVERY\n\n\nReport status every this many sentences", 
+            "text": "preprocess.py:\n\n\nusage: preprocess.py [-h] [-md] [-config CONFIG] [-src_type SRC_TYPE]\n                     [-src_img_dir SRC_IMG_DIR] -train_src TRAIN_SRC\n                     -train_tgt TRAIN_TGT -valid_src VALID_SRC -valid_tgt\n                     VALID_TGT -save_data SAVE_DATA\n                     [-src_vocab_size SRC_VOCAB_SIZE]\n                     [-tgt_vocab_size TGT_VOCAB_SIZE] [-src_vocab SRC_VOCAB]\n                     [-tgt_vocab TGT_VOCAB]\n                     [-features_vocabs_prefix FEATURES_VOCABS_PREFIX]\n                     [-src_seq_length SRC_SEQ_LENGTH]\n                     [-src_seq_length_trunc SRC_SEQ_LENGTH_TRUNC]\n                     [-tgt_seq_length TGT_SEQ_LENGTH]\n                     [-tgt_seq_length_trunc TGT_SEQ_LENGTH_TRUNC]\n                     [-shuffle SHUFFLE] [-seed SEED] [-lower]\n                     [-report_every REPORT_EVERY]\n\n\n\n\n\npreprocess.py\n\n\noptional arguments\n:\n\n\n-h, --help\n\n\nshow this help message and exit\n\n\n\n\n\n-md\n\n\nprint Markdown-formatted help text and exit.\n\n\n\n\n\n-config CONFIG\n\n\nRead options from this file\n\n\n\n\n\n-src_type SRC_TYPE\n\n\nType of the source input. Options are [text|img].\n\n\n\n\n\n-src_img_dir SRC_IMG_DIR\n\n\nLocation of source images\n\n\n\n\n\n-train_src TRAIN_SRC\n\n\nPath to the training source data\n\n\n\n\n\n-train_tgt TRAIN_TGT\n\n\nPath to the training target data\n\n\n\n\n\n-valid_src VALID_SRC\n\n\nPath to the validation source data\n\n\n\n\n\n-valid_tgt VALID_TGT\n\n\nPath to the validation target data\n\n\n\n\n\n-save_data SAVE_DATA\n\n\nOutput file for the prepared data\n\n\n\n\n\n-src_vocab_size SRC_VOCAB_SIZE\n\n\nSize of the source vocabulary\n\n\n\n\n\n-tgt_vocab_size TGT_VOCAB_SIZE\n\n\nSize of the target vocabulary\n\n\n\n\n\n-src_vocab SRC_VOCAB\n\n\nPath to an existing source vocabulary\n\n\n\n\n\n-tgt_vocab TGT_VOCAB\n\n\nPath to an existing target vocabulary\n\n\n\n\n\n-features_vocabs_prefix FEATURES_VOCABS_PREFIX\n\n\nPath prefix to existing features vocabularies\n\n\n\n\n\n-src_seq_length SRC_SEQ_LENGTH\n\n\nMaximum source sequence length\n\n\n\n\n\n-src_seq_length_trunc SRC_SEQ_LENGTH_TRUNC\n\n\nTruncate source sequence length.\n\n\n\n\n\n-tgt_seq_length TGT_SEQ_LENGTH\n\n\nMaximum target sequence length to keep.\n\n\n\n\n\n-tgt_seq_length_trunc TGT_SEQ_LENGTH_TRUNC\n\n\nTruncate target sequence length.\n\n\n\n\n\n-shuffle SHUFFLE\n\n\nShuffle data\n\n\n\n\n\n-seed SEED\n\n\nRandom seed\n\n\n\n\n\n-lower\n\n\nlowercase data\n\n\n\n\n\n-report_every REPORT_EVERY\n\n\nReport status every this many sentences", 
             "title": "preprocess.py"
         }, 
         {
             "location": "/options/preprocess/#preprocesspy", 
-            "text": "usage: preprocess.py [-h] [-md] [-config CONFIG] -train_src TRAIN_SRC\n                     -train_tgt TRAIN_TGT -valid_src VALID_SRC -valid_tgt\n                     VALID_TGT -save_data SAVE_DATA\n                     [-src_vocab_size SRC_VOCAB_SIZE]\n                     [-tgt_vocab_size TGT_VOCAB_SIZE] [-src_vocab SRC_VOCAB]\n                     [-tgt_vocab TGT_VOCAB] [-seq_length SEQ_LENGTH]\n                     [-shuffle SHUFFLE] [-seed SEED] [-lower]\n                     [-report_every REPORT_EVERY]  preprocess.py", 
+            "text": "usage: preprocess.py [-h] [-md] [-config CONFIG] [-src_type SRC_TYPE]\n                     [-src_img_dir SRC_IMG_DIR] -train_src TRAIN_SRC\n                     -train_tgt TRAIN_TGT -valid_src VALID_SRC -valid_tgt\n                     VALID_TGT -save_data SAVE_DATA\n                     [-src_vocab_size SRC_VOCAB_SIZE]\n                     [-tgt_vocab_size TGT_VOCAB_SIZE] [-src_vocab SRC_VOCAB]\n                     [-tgt_vocab TGT_VOCAB]\n                     [-features_vocabs_prefix FEATURES_VOCABS_PREFIX]\n                     [-src_seq_length SRC_SEQ_LENGTH]\n                     [-src_seq_length_trunc SRC_SEQ_LENGTH_TRUNC]\n                     [-tgt_seq_length TGT_SEQ_LENGTH]\n                     [-tgt_seq_length_trunc TGT_SEQ_LENGTH_TRUNC]\n                     [-shuffle SHUFFLE] [-seed SEED] [-lower]\n                     [-report_every REPORT_EVERY]  preprocess.py", 
             "title": "preprocess.py:"
         }, 
         {
@@ -114,6 +114,16 @@
             "location": "/options/preprocess/#-config-config", 
             "text": "Read options from this file", 
             "title": "-config CONFIG"
+        }, 
+        {
+            "location": "/options/preprocess/#-src_type-src_type", 
+            "text": "Type of the source input. Options are [text|img].", 
+            "title": "-src_type SRC_TYPE"
+        }, 
+        {
+            "location": "/options/preprocess/#-src_img_dir-src_img_dir", 
+            "text": "Location of source images", 
+            "title": "-src_img_dir SRC_IMG_DIR"
         }, 
         {
             "location": "/options/preprocess/#-train_src-train_src", 
@@ -161,9 +171,29 @@
             "title": "-tgt_vocab TGT_VOCAB"
         }, 
         {
-            "location": "/options/preprocess/#-seq_length-seq_length", 
-            "text": "Maximum sequence length", 
-            "title": "-seq_length SEQ_LENGTH"
+            "location": "/options/preprocess/#-features_vocabs_prefix-features_vocabs_prefix", 
+            "text": "Path prefix to existing features vocabularies", 
+            "title": "-features_vocabs_prefix FEATURES_VOCABS_PREFIX"
+        }, 
+        {
+            "location": "/options/preprocess/#-src_seq_length-src_seq_length", 
+            "text": "Maximum source sequence length", 
+            "title": "-src_seq_length SRC_SEQ_LENGTH"
+        }, 
+        {
+            "location": "/options/preprocess/#-src_seq_length_trunc-src_seq_length_trunc", 
+            "text": "Truncate source sequence length.", 
+            "title": "-src_seq_length_trunc SRC_SEQ_LENGTH_TRUNC"
+        }, 
+        {
+            "location": "/options/preprocess/#-tgt_seq_length-tgt_seq_length", 
+            "text": "Maximum target sequence length to keep.", 
+            "title": "-tgt_seq_length TGT_SEQ_LENGTH"
+        }, 
+        {
+            "location": "/options/preprocess/#-tgt_seq_length_trunc-tgt_seq_length_trunc", 
+            "text": "Truncate target sequence length.", 
+            "title": "-tgt_seq_length_trunc TGT_SEQ_LENGTH_TRUNC"
         }, 
         {
             "location": "/options/preprocess/#-shuffle-shuffle", 
@@ -187,12 +217,12 @@
         }, 
         {
             "location": "/options/train/", 
-            "text": "train.py:\n\n\nusage: train.py [-h] [-md] -data DATA [-save_model SAVE_MODEL]\n                [-train_from_state_dict TRAIN_FROM_STATE_DICT]\n                [-train_from TRAIN_FROM] [-layers LAYERS] [-rnn_size RNN_SIZE]\n                [-word_vec_size WORD_VEC_SIZE] [-input_feed INPUT_FEED]\n                [-brnn] [-brnn_merge BRNN_MERGE] [-batch_size BATCH_SIZE]\n                [-max_generator_batches MAX_GENERATOR_BATCHES]\n                [-epochs EPOCHS] [-start_epoch START_EPOCH]\n                [-param_init PARAM_INIT] [-optim OPTIM]\n                [-max_grad_norm MAX_GRAD_NORM] [-dropout DROPOUT]\n                [-curriculum] [-extra_shuffle] [-learning_rate LEARNING_RATE]\n                [-learning_rate_decay LEARNING_RATE_DECAY]\n                [-start_decay_at START_DECAY_AT]\n                [-pre_word_vecs_enc PRE_WORD_VECS_ENC]\n                [-pre_word_vecs_dec PRE_WORD_VECS_DEC] [-gpus GPUS [GPUS ...]]\n                [-log_interval LOG_INTERVAL]\n\n\n\n\n\ntrain.py\n\n\noptional arguments\n:\n\n\n-h, --help\n\n\nshow this help message and exit\n\n\n\n\n\n-md\n\n\nprint Markdown-formatted help text and exit.\n\n\n\n\n\n-data DATA\n\n\nPath to the *-train.pt file from preprocess.py\n\n\n\n\n\n-save_model SAVE_MODEL\n\n\nModel filename (the model will be saved as \nsave_model\n_epochN_PPL.pt where PPL\nis the validation perplexity\n\n\n\n\n\n-train_from_state_dict TRAIN_FROM_STATE_DICT\n\n\nIf training from a checkpoint then this is the path to the pretrained model\ns\nstate_dict.\n\n\n\n\n\n-train_from TRAIN_FROM\n\n\nIf training from a checkpoint then this is the path to the pretrained model.\n\n\n\n\n\n-layers LAYERS\n\n\nNumber of layers in the LSTM encoder/decoder\n\n\n\n\n\n-rnn_size RNN_SIZE\n\n\nSize of LSTM hidden states\n\n\n\n\n\n-word_vec_size WORD_VEC_SIZE\n\n\nWord embedding sizes\n\n\n\n\n\n-input_feed INPUT_FEED\n\n\nFeed the context vector at each time step as additional input (via concatenation\nwith the word embeddings) to the decoder.\n\n\n\n\n\n-brnn\n\n\nUse a bidirectional encoder\n\n\n\n\n\n-brnn_merge BRNN_MERGE\n\n\nMerge action for the bidirectional hidden states: [concat|sum]\n\n\n\n\n\n-batch_size BATCH_SIZE\n\n\nMaximum batch size\n\n\n\n\n\n-max_generator_batches MAX_GENERATOR_BATCHES\n\n\nMaximum batches of words in a sequence to run the generator on in parallel.\nHigher is faster, but uses more memory.\n\n\n\n\n\n-epochs EPOCHS\n\n\nNumber of training epochs\n\n\n\n\n\n-start_epoch START_EPOCH\n\n\nThe epoch from which to start\n\n\n\n\n\n-param_init PARAM_INIT\n\n\nParameters are initialized over uniform distribution with support (-param_init,\nparam_init)\n\n\n\n\n\n-optim OPTIM\n\n\nOptimization method. [sgd|adagrad|adadelta|adam]\n\n\n\n\n\n-max_grad_norm MAX_GRAD_NORM\n\n\nIf the norm of the gradient vector exceeds this, renormalize it to have the norm\nequal to max_grad_norm\n\n\n\n\n\n-dropout DROPOUT\n\n\nDropout probability; applied between LSTM stacks.\n\n\n\n\n\n-curriculum\n\n\nFor this many epochs, order the minibatches based on source sequence length.\nSometimes setting this to 1 will increase convergence speed.\n\n\n\n\n\n-extra_shuffle\n\n\nBy default only shuffle mini-batch order; when true, shuffle and re-assign mini-\nbatches\n\n\n\n\n\n-learning_rate LEARNING_RATE\n\n\nStarting learning rate. If adagrad/adadelta/adam is used, then this is the\nglobal learning rate. Recommended settings: sgd = 1, adagrad = 0.1, adadelta =\n1, adam = 0.001\n\n\n\n\n\n-learning_rate_decay LEARNING_RATE_DECAY\n\n\nIf update_learning_rate, decay learning rate by this much if (i) perplexity does\nnot decrease on the validation set or (ii) epoch has gone past start_decay_at\n\n\n\n\n\n-start_decay_at START_DECAY_AT\n\n\nStart decaying every epoch after and including this epoch\n\n\n\n\n\n-pre_word_vecs_enc PRE_WORD_VECS_ENC\n\n\nIf a valid path is specified, then this will load pretrained word embeddings on\nthe encoder side. See README for specific formatting instructions.\n\n\n\n\n\n-pre_word_vecs_dec PRE_WORD_VECS_DEC\n\n\nIf a valid path is specified, then this will load pretrained word embeddings on\nthe decoder side. See README for specific formatting instructions.\n\n\n\n\n\n-gpus GPUS [GPUS ...]\n\n\nUse CUDA on the listed devices.\n\n\n\n\n\n-log_interval LOG_INTERVAL\n\n\nPrint stats at this interval.", 
+            "text": "train.py:\n\n\nusage: train.py [-h] [-md] -data DATA [-save_model SAVE_MODEL]\n                [-train_from_state_dict TRAIN_FROM_STATE_DICT]\n                [-train_from TRAIN_FROM] [-layers LAYERS] [-rnn_size RNN_SIZE]\n                [-word_vec_size WORD_VEC_SIZE]\n                [-feature_vec_size FEATURE_VEC_SIZE] [-input_feed INPUT_FEED]\n                [-rnn_type {LSTM,GRU}] [-brnn] [-brnn_merge BRNN_MERGE]\n                [-copy_attn] [-coverage_attn] [-encoder_layer ENCODER_LAYER]\n                [-decoder_layer DECODER_LAYER]\n                [-context_gate {source,target,both}]\n                [-encoder_type ENCODER_TYPE] [-batch_size BATCH_SIZE]\n                [-max_generator_batches MAX_GENERATOR_BATCHES]\n                [-epochs EPOCHS] [-start_epoch START_EPOCH]\n                [-param_init PARAM_INIT] [-optim OPTIM]\n                [-max_grad_norm MAX_GRAD_NORM] [-dropout DROPOUT]\n                [-position_encoding] [-share_decoder_embeddings] [-curriculum]\n                [-extra_shuffle] [-truncated_decoder TRUNCATED_DECODER]\n                [-learning_rate LEARNING_RATE]\n                [-learning_rate_decay LEARNING_RATE_DECAY]\n                [-start_decay_at START_DECAY_AT]\n                [-start_checkpoint_at START_CHECKPOINT_AT]\n                [-decay_method DECAY_METHOD] [-warmup_steps WARMUP_STEPS]\n                [-pre_word_vecs_enc PRE_WORD_VECS_ENC]\n                [-pre_word_vecs_dec PRE_WORD_VECS_DEC] [-gpus GPUS [GPUS ...]]\n                [-log_interval LOG_INTERVAL] [-log_server LOG_SERVER]\n                [-experiment_name EXPERIMENT_NAME] [-seed SEED]\n\n\n\n\n\ntrain.py\n\n\noptional arguments\n:\n\n\n-h, --help\n\n\nshow this help message and exit\n\n\n\n\n\n-md\n\n\nprint Markdown-formatted help text and exit.\n\n\n\n\n\n-data DATA\n\n\nPath to the *-train.pt file from preprocess.py\n\n\n\n\n\n-save_model SAVE_MODEL\n\n\nModel filename (the model will be saved as \nsave_model\n_epochN_PPL.pt where PPL\nis the validation perplexity\n\n\n\n\n\n-train_from_state_dict TRAIN_FROM_STATE_DICT\n\n\nIf training from a checkpoint then this is the path to the pretrained model\ns\nstate_dict.\n\n\n\n\n\n-train_from TRAIN_FROM\n\n\nIf training from a checkpoint then this is the path to the pretrained model.\n\n\n\n\n\n-layers LAYERS\n\n\nNumber of layers in the LSTM encoder/decoder\n\n\n\n\n\n-rnn_size RNN_SIZE\n\n\nSize of LSTM hidden states\n\n\n\n\n\n-word_vec_size WORD_VEC_SIZE\n\n\nWord embedding sizes\n\n\n\n\n\n-feature_vec_size FEATURE_VEC_SIZE\n\n\nFeature vec sizes\n\n\n\n\n\n-input_feed INPUT_FEED\n\n\nFeed the context vector at each time step as additional input (via concatenation\nwith the word embeddings) to the decoder.\n\n\n\n\n\n-rnn_type {LSTM,GRU}\n\n\nThe gate type to use in the RNNs\n\n\n\n\n\n-brnn\n\n\nUse a bidirectional encoder\n\n\n\n\n\n-brnn_merge BRNN_MERGE\n\n\nMerge action for the bidirectional hidden states: [concat|sum]\n\n\n\n\n\n-copy_attn\n\n\nTrain copy attention layer.\n\n\n\n\n\n-coverage_attn\n\n\nTrain a coverage attention layer.\n\n\n\n\n\n-encoder_layer ENCODER_LAYER\n\n\nType of encoder layer to use. Options: [rnn|mean|transformer]\n\n\n\n\n\n-decoder_layer DECODER_LAYER\n\n\nType of decoder layer to use. [rnn|transformer]\n\n\n\n\n\n-context_gate {source,target,both}\n\n\nType of context gate to use [source|target|both]. Do not select for no context\ngate.\n\n\n\n\n\n-encoder_type ENCODER_TYPE\n\n\nType of encoder to use. Options are [text|img].\n\n\n\n\n\n-batch_size BATCH_SIZE\n\n\nMaximum batch size\n\n\n\n\n\n-max_generator_batches MAX_GENERATOR_BATCHES\n\n\nMaximum batches of words in a sequence to run the generator on in parallel.\nHigher is faster, but uses more memory.\n\n\n\n\n\n-epochs EPOCHS\n\n\nNumber of training epochs\n\n\n\n\n\n-start_epoch START_EPOCH\n\n\nThe epoch from which to start\n\n\n\n\n\n-param_init PARAM_INIT\n\n\nParameters are initialized over uniform distribution with support (-param_init,\nparam_init). Use 0 to not use initialization\n\n\n\n\n\n-optim OPTIM\n\n\nOptimization method. [sgd|adagrad|adadelta|adam]\n\n\n\n\n\n-max_grad_norm MAX_GRAD_NORM\n\n\nIf the norm of the gradient vector exceeds this, renormalize it to have the norm\nequal to max_grad_norm\n\n\n\n\n\n-dropout DROPOUT\n\n\nDropout probability; applied between LSTM stacks.\n\n\n\n\n\n-position_encoding\n\n\nUse a sinusoid to mark relative words positions.\n\n\n\n\n\n-share_decoder_embeddings\n\n\nShare the word and softmax embeddings for decoder.\n\n\n\n\n\n-curriculum\n\n\nFor this many epochs, order the minibatches based on source sequence length.\nSometimes setting this to 1 will increase convergence speed.\n\n\n\n\n\n-extra_shuffle\n\n\nBy default only shuffle mini-batch order; when true, shuffle and re-assign mini-\nbatches\n\n\n\n\n\n-truncated_decoder TRUNCATED_DECODER\n\n\nTruncated bptt.\n\n\n\n\n\n-learning_rate LEARNING_RATE\n\n\nStarting learning rate. If adagrad/adadelta/adam is used, then this is the\nglobal learning rate. Recommended settings: sgd = 1, adagrad = 0.1, adadelta =\n1, adam = 0.001\n\n\n\n\n\n-learning_rate_decay LEARNING_RATE_DECAY\n\n\nIf update_learning_rate, decay learning rate by this much if (i) perplexity does\nnot decrease on the validation set or (ii) epoch has gone past start_decay_at\n\n\n\n\n\n-start_decay_at START_DECAY_AT\n\n\nStart decaying every epoch after and including this epoch\n\n\n\n\n\n-start_checkpoint_at START_CHECKPOINT_AT\n\n\nStart checkpointing every epoch after and including this epoch\n\n\n\n\n\n-decay_method DECAY_METHOD\n\n\nUse a custom learning rate decay [|noam]\n\n\n\n\n\n-warmup_steps WARMUP_STEPS\n\n\nNumber of warmup steps for custom decay.\n\n\n\n\n\n-pre_word_vecs_enc PRE_WORD_VECS_ENC\n\n\nIf a valid path is specified, then this will load pretrained word embeddings on\nthe encoder side. See README for specific formatting instructions.\n\n\n\n\n\n-pre_word_vecs_dec PRE_WORD_VECS_DEC\n\n\nIf a valid path is specified, then this will load pretrained word embeddings on\nthe decoder side. See README for specific formatting instructions.\n\n\n\n\n\n-gpus GPUS [GPUS ...]\n\n\nUse CUDA on the listed devices.\n\n\n\n\n\n-log_interval LOG_INTERVAL\n\n\nPrint stats at this interval.\n\n\n\n\n\n-log_server LOG_SERVER\n\n\nSend logs to this crayon server.\n\n\n\n\n\n-experiment_name EXPERIMENT_NAME\n\n\nName of the experiment for logging.\n\n\n\n\n\n-seed SEED\n\n\nRandom seed used for the experiments reproducibility.", 
             "title": "train.py"
         }, 
         {
             "location": "/options/train/#trainpy", 
-            "text": "usage: train.py [-h] [-md] -data DATA [-save_model SAVE_MODEL]\n                [-train_from_state_dict TRAIN_FROM_STATE_DICT]\n                [-train_from TRAIN_FROM] [-layers LAYERS] [-rnn_size RNN_SIZE]\n                [-word_vec_size WORD_VEC_SIZE] [-input_feed INPUT_FEED]\n                [-brnn] [-brnn_merge BRNN_MERGE] [-batch_size BATCH_SIZE]\n                [-max_generator_batches MAX_GENERATOR_BATCHES]\n                [-epochs EPOCHS] [-start_epoch START_EPOCH]\n                [-param_init PARAM_INIT] [-optim OPTIM]\n                [-max_grad_norm MAX_GRAD_NORM] [-dropout DROPOUT]\n                [-curriculum] [-extra_shuffle] [-learning_rate LEARNING_RATE]\n                [-learning_rate_decay LEARNING_RATE_DECAY]\n                [-start_decay_at START_DECAY_AT]\n                [-pre_word_vecs_enc PRE_WORD_VECS_ENC]\n                [-pre_word_vecs_dec PRE_WORD_VECS_DEC] [-gpus GPUS [GPUS ...]]\n                [-log_interval LOG_INTERVAL]  train.py", 
+            "text": "usage: train.py [-h] [-md] -data DATA [-save_model SAVE_MODEL]\n                [-train_from_state_dict TRAIN_FROM_STATE_DICT]\n                [-train_from TRAIN_FROM] [-layers LAYERS] [-rnn_size RNN_SIZE]\n                [-word_vec_size WORD_VEC_SIZE]\n                [-feature_vec_size FEATURE_VEC_SIZE] [-input_feed INPUT_FEED]\n                [-rnn_type {LSTM,GRU}] [-brnn] [-brnn_merge BRNN_MERGE]\n                [-copy_attn] [-coverage_attn] [-encoder_layer ENCODER_LAYER]\n                [-decoder_layer DECODER_LAYER]\n                [-context_gate {source,target,both}]\n                [-encoder_type ENCODER_TYPE] [-batch_size BATCH_SIZE]\n                [-max_generator_batches MAX_GENERATOR_BATCHES]\n                [-epochs EPOCHS] [-start_epoch START_EPOCH]\n                [-param_init PARAM_INIT] [-optim OPTIM]\n                [-max_grad_norm MAX_GRAD_NORM] [-dropout DROPOUT]\n                [-position_encoding] [-share_decoder_embeddings] [-curriculum]\n                [-extra_shuffle] [-truncated_decoder TRUNCATED_DECODER]\n                [-learning_rate LEARNING_RATE]\n                [-learning_rate_decay LEARNING_RATE_DECAY]\n                [-start_decay_at START_DECAY_AT]\n                [-start_checkpoint_at START_CHECKPOINT_AT]\n                [-decay_method DECAY_METHOD] [-warmup_steps WARMUP_STEPS]\n                [-pre_word_vecs_enc PRE_WORD_VECS_ENC]\n                [-pre_word_vecs_dec PRE_WORD_VECS_DEC] [-gpus GPUS [GPUS ...]]\n                [-log_interval LOG_INTERVAL] [-log_server LOG_SERVER]\n                [-experiment_name EXPERIMENT_NAME] [-seed SEED]  train.py", 
             "title": "train.py:"
         }, 
         {
@@ -246,9 +276,19 @@
             "title": "-word_vec_size WORD_VEC_SIZE"
         }, 
         {
+            "location": "/options/train/#-feature_vec_size-feature_vec_size", 
+            "text": "Feature vec sizes", 
+            "title": "-feature_vec_size FEATURE_VEC_SIZE"
+        }, 
+        {
             "location": "/options/train/#-input_feed-input_feed", 
             "text": "Feed the context vector at each time step as additional input (via concatenation\nwith the word embeddings) to the decoder.", 
             "title": "-input_feed INPUT_FEED"
+        }, 
+        {
+            "location": "/options/train/#-rnn_type-lstmgru", 
+            "text": "The gate type to use in the RNNs", 
+            "title": "-rnn_type {LSTM,GRU}"
         }, 
         {
             "location": "/options/train/#-brnn", 
@@ -259,6 +299,36 @@
             "location": "/options/train/#-brnn_merge-brnn_merge", 
             "text": "Merge action for the bidirectional hidden states: [concat|sum]", 
             "title": "-brnn_merge BRNN_MERGE"
+        }, 
+        {
+            "location": "/options/train/#-copy_attn", 
+            "text": "Train copy attention layer.", 
+            "title": "-copy_attn"
+        }, 
+        {
+            "location": "/options/train/#-coverage_attn", 
+            "text": "Train a coverage attention layer.", 
+            "title": "-coverage_attn"
+        }, 
+        {
+            "location": "/options/train/#-encoder_layer-encoder_layer", 
+            "text": "Type of encoder layer to use. Options: [rnn|mean|transformer]", 
+            "title": "-encoder_layer ENCODER_LAYER"
+        }, 
+        {
+            "location": "/options/train/#-decoder_layer-decoder_layer", 
+            "text": "Type of decoder layer to use. [rnn|transformer]", 
+            "title": "-decoder_layer DECODER_LAYER"
+        }, 
+        {
+            "location": "/options/train/#-context_gate-sourcetargetboth", 
+            "text": "Type of context gate to use [source|target|both]. Do not select for no context\ngate.", 
+            "title": "-context_gate {source,target,both}"
+        }, 
+        {
+            "location": "/options/train/#-encoder_type-encoder_type", 
+            "text": "Type of encoder to use. Options are [text|img].", 
+            "title": "-encoder_type ENCODER_TYPE"
         }, 
         {
             "location": "/options/train/#-batch_size-batch_size", 
@@ -282,7 +352,7 @@
         }, 
         {
             "location": "/options/train/#-param_init-param_init", 
-            "text": "Parameters are initialized over uniform distribution with support (-param_init,\nparam_init)", 
+            "text": "Parameters are initialized over uniform distribution with support (-param_init,\nparam_init). Use 0 to not use initialization", 
             "title": "-param_init PARAM_INIT"
         }, 
         {
@@ -301,6 +371,16 @@
             "title": "-dropout DROPOUT"
         }, 
         {
+            "location": "/options/train/#-position_encoding", 
+            "text": "Use a sinusoid to mark relative words positions.", 
+            "title": "-position_encoding"
+        }, 
+        {
+            "location": "/options/train/#-share_decoder_embeddings", 
+            "text": "Share the word and softmax embeddings for decoder.", 
+            "title": "-share_decoder_embeddings"
+        }, 
+        {
             "location": "/options/train/#-curriculum", 
             "text": "For this many epochs, order the minibatches based on source sequence length.\nSometimes setting this to 1 will increase convergence speed.", 
             "title": "-curriculum"
@@ -309,6 +389,11 @@
             "location": "/options/train/#-extra_shuffle", 
             "text": "By default only shuffle mini-batch order; when true, shuffle and re-assign mini-\nbatches", 
             "title": "-extra_shuffle"
+        }, 
+        {
+            "location": "/options/train/#-truncated_decoder-truncated_decoder", 
+            "text": "Truncated bptt.", 
+            "title": "-truncated_decoder TRUNCATED_DECODER"
         }, 
         {
             "location": "/options/train/#-learning_rate-learning_rate", 
@@ -324,6 +409,21 @@
             "location": "/options/train/#-start_decay_at-start_decay_at", 
             "text": "Start decaying every epoch after and including this epoch", 
             "title": "-start_decay_at START_DECAY_AT"
+        }, 
+        {
+            "location": "/options/train/#-start_checkpoint_at-start_checkpoint_at", 
+            "text": "Start checkpointing every epoch after and including this epoch", 
+            "title": "-start_checkpoint_at START_CHECKPOINT_AT"
+        }, 
+        {
+            "location": "/options/train/#-decay_method-decay_method", 
+            "text": "Use a custom learning rate decay [|noam]", 
+            "title": "-decay_method DECAY_METHOD"
+        }, 
+        {
+            "location": "/options/train/#-warmup_steps-warmup_steps", 
+            "text": "Number of warmup steps for custom decay.", 
+            "title": "-warmup_steps WARMUP_STEPS"
         }, 
         {
             "location": "/options/train/#-pre_word_vecs_enc-pre_word_vecs_enc", 
@@ -346,13 +446,28 @@
             "title": "-log_interval LOG_INTERVAL"
         }, 
         {
+            "location": "/options/train/#-log_server-log_server", 
+            "text": "Send logs to this crayon server.", 
+            "title": "-log_server LOG_SERVER"
+        }, 
+        {
+            "location": "/options/train/#-experiment_name-experiment_name", 
+            "text": "Name of the experiment for logging.", 
+            "title": "-experiment_name EXPERIMENT_NAME"
+        }, 
+        {
+            "location": "/options/train/#-seed-seed", 
+            "text": "Random seed used for the experiments reproducibility.", 
+            "title": "-seed SEED"
+        }, 
+        {
             "location": "/options/translate/", 
-            "text": "translate.py:\n\n\nusage: translate.py [-h] [-md] -model MODEL -src SRC [-tgt TGT]\n                    [-output OUTPUT] [-beam_size BEAM_SIZE]\n                    [-batch_size BATCH_SIZE]\n                    [-max_sent_length MAX_SENT_LENGTH] [-replace_unk]\n                    [-verbose] [-n_best N_BEST] [-gpu GPU]\n\n\n\n\n\ntranslate.py\n\n\noptional arguments\n:\n\n\n-h, --help\n\n\nshow this help message and exit\n\n\n\n\n\n-md\n\n\nprint Markdown-formatted help text and exit.\n\n\n\n\n\n-model MODEL\n\n\nPath to model .pt file\n\n\n\n\n\n-src SRC\n\n\nSource sequence to decode (one line per sequence)\n\n\n\n\n\n-tgt TGT\n\n\nTrue target sequence (optional)\n\n\n\n\n\n-output OUTPUT\n\n\nPath to output the predictions (each line will be the decoded sequence\n\n\n\n\n\n-beam_size BEAM_SIZE\n\n\nBeam size\n\n\n\n\n\n-batch_size BATCH_SIZE\n\n\nBatch size\n\n\n\n\n\n-max_sent_length MAX_SENT_LENGTH\n\n\nMaximum sentence length.\n\n\n\n\n\n-replace_unk\n\n\nReplace the generated UNK tokens with the source token that had the highest\nattention weight. If phrase_table is provided, it will lookup the identified\nsource token and give the corresponding target token. If it is not provided (or\nthe identified source token does not exist in the table) then it will copy the\nsource token\n\n\n\n\n\n-verbose\n\n\nPrint scores and predictions for each sentence\n\n\n\n\n\n-n_best N_BEST\n\n\nIf verbose is set, will output the n_best decoded sentences\n\n\n\n\n\n-gpu GPU\n\n\nDevice to run on", 
+            "text": "translate.py:\n\n\nusage: translate.py [-h] [-md] -model MODEL -src SRC\n                    [-src_img_dir SRC_IMG_DIR] [-tgt TGT] [-output OUTPUT]\n                    [-beam_size BEAM_SIZE] [-batch_size BATCH_SIZE]\n                    [-max_sent_length MAX_SENT_LENGTH] [-replace_unk]\n                    [-verbose] [-attn_debug] [-dump_beam DUMP_BEAM]\n                    [-n_best N_BEST] [-gpu GPU]\n\n\n\n\n\ntranslate.py\n\n\noptional arguments\n:\n\n\n-h, --help\n\n\nshow this help message and exit\n\n\n\n\n\n-md\n\n\nprint Markdown-formatted help text and exit.\n\n\n\n\n\n-model MODEL\n\n\nPath to model .pt file\n\n\n\n\n\n-src SRC\n\n\nSource sequence to decode (one line per sequence)\n\n\n\n\n\n-src_img_dir SRC_IMG_DIR\n\n\nSource image directory\n\n\n\n\n\n-tgt TGT\n\n\nTrue target sequence (optional)\n\n\n\n\n\n-output OUTPUT\n\n\nPath to output the predictions (each line will be the decoded sequence\n\n\n\n\n\n-beam_size BEAM_SIZE\n\n\nBeam size\n\n\n\n\n\n-batch_size BATCH_SIZE\n\n\nBatch size\n\n\n\n\n\n-max_sent_length MAX_SENT_LENGTH\n\n\nMaximum sentence length.\n\n\n\n\n\n-replace_unk\n\n\nReplace the generated UNK tokens with the source token that had highest\nattention weight. If phrase_table is provided, it will lookup the identified\nsource token and give the corresponding target token. If it is not provided (or\nthe identified source token does not exist in the table) then it will copy the\nsource token\n\n\n\n\n\n-verbose\n\n\nPrint scores and predictions for each sentence\n\n\n\n\n\n-attn_debug\n\n\nPrint best attn for each word\n\n\n\n\n\n-dump_beam DUMP_BEAM\n\n\nFile to dump beam information to.\n\n\n\n\n\n-n_best N_BEST\n\n\nIf verbose is set, will output the n_best decoded sentences\n\n\n\n\n\n-gpu GPU\n\n\nDevice to run on", 
             "title": "translate.py"
         }, 
         {
             "location": "/options/translate/#translatepy", 
-            "text": "usage: translate.py [-h] [-md] -model MODEL -src SRC [-tgt TGT]\n                    [-output OUTPUT] [-beam_size BEAM_SIZE]\n                    [-batch_size BATCH_SIZE]\n                    [-max_sent_length MAX_SENT_LENGTH] [-replace_unk]\n                    [-verbose] [-n_best N_BEST] [-gpu GPU]  translate.py", 
+            "text": "usage: translate.py [-h] [-md] -model MODEL -src SRC\n                    [-src_img_dir SRC_IMG_DIR] [-tgt TGT] [-output OUTPUT]\n                    [-beam_size BEAM_SIZE] [-batch_size BATCH_SIZE]\n                    [-max_sent_length MAX_SENT_LENGTH] [-replace_unk]\n                    [-verbose] [-attn_debug] [-dump_beam DUMP_BEAM]\n                    [-n_best N_BEST] [-gpu GPU]  translate.py", 
             "title": "translate.py:"
         }, 
         {
@@ -381,6 +496,11 @@
             "title": "-src SRC"
         }, 
         {
+            "location": "/options/translate/#-src_img_dir-src_img_dir", 
+            "text": "Source image directory", 
+            "title": "-src_img_dir SRC_IMG_DIR"
+        }, 
+        {
             "location": "/options/translate/#-tgt-tgt", 
             "text": "True target sequence (optional)", 
             "title": "-tgt TGT"
@@ -407,13 +527,23 @@
         }, 
         {
             "location": "/options/translate/#-replace_unk", 
-            "text": "Replace the generated UNK tokens with the source token that had the highest\nattention weight. If phrase_table is provided, it will lookup the identified\nsource token and give the corresponding target token. If it is not provided (or\nthe identified source token does not exist in the table) then it will copy the\nsource token", 
+            "text": "Replace the generated UNK tokens with the source token that had highest\nattention weight. If phrase_table is provided, it will lookup the identified\nsource token and give the corresponding target token. If it is not provided (or\nthe identified source token does not exist in the table) then it will copy the\nsource token", 
             "title": "-replace_unk"
         }, 
         {
             "location": "/options/translate/#-verbose", 
             "text": "Print scores and predictions for each sentence", 
             "title": "-verbose"
+        }, 
+        {
+            "location": "/options/translate/#-attn_debug", 
+            "text": "Print best attn for each word", 
+            "title": "-attn_debug"
+        }, 
+        {
+            "location": "/options/translate/#-dump_beam-dump_beam", 
+            "text": "File to dump beam information to.", 
+            "title": "-dump_beam DUMP_BEAM"
         }, 
         {
             "location": "/options/translate/#-n_best-n_best", 
