@@ -60,6 +60,8 @@ class Translator(object):
                     tokens.append(vocab.itos[tok])
                 else:
                     tokens.append(copy_vocab.itos[tok - len(vocab)])
+
+        print()
         tokens = tokens[:-1]  # EOS
         if self.opt.replace_unk:
             for i in range(len(tokens)):
@@ -96,7 +98,7 @@ class Translator(object):
         return goldScores
 
 
-    def translateBatch(self, batch, data):
+    def translateBatch(self, batch, dataset):
         beamSize = self.opt.beam_size
 
         #  (1) run the encoder on the src
@@ -117,15 +119,17 @@ class Translator(object):
         beam = onmt.Beam(beamSize, cuda=self.opt.cuda,
                          vocab=self.fields["tgt"].vocab)
 
+
         #  (2) run the decoder to generate sentences, using beam search
         for i in range(self.opt.max_sent_length):
-            # Construct batchxbeam_size next words.
-            inp = b.getCurrentState().unsqueeze(0)
+            # Construct batch x beam_size next words.
+            inp = var(beam.getCurrentState().unsqueeze(0))
+            inp = inp.masked_fill(inp.gt(len(self.fields["tgt"].vocab) - 1), 0) # 0 is unk
             # 1 x beam_size
 
             # Run one step.
             decOut, decStates, attn = \
-                self.model.decoder(var(inp), src, context, decStates)
+                self.model.decoder(inp, src, context, decStates)
             decOut = decOut.squeeze(0)
             # decOut: beam x rnn_size
 
@@ -134,17 +138,19 @@ class Translator(object):
                 out = self.model.generator.forward(decOut).data
                 # beam x tgt_vocab
             else:
-                attn_copy = attn["copy"].unsqueeze(0).contiguous()
+                attn_copy = attn["copy"].squeeze(0).contiguous()
+                
                 out = self.model.generator.forward(
                     decOut, attn_copy, src_map)
                 # beam x (tgt_vocab + extra_vocab)
-                out = data.collapseCopyScores(
-                    out.data, batch, self.fields["tgt"].vocab)
+                # out = out.data.unsqueeze(1)
+                out = dataset.collapseCopyScores(
+                    out.data.unsqueeze(1), batch, self.fields["tgt"].vocab)
                 # beam x tgt_vocab
-                out = out.log()
+                out = out.squeeze(1).log()
 
             # (c) Advance each beam.
-            is_done = beam.advance(out, attn["std"].data)
+            is_done = beam.advance(out, attn["std"].data.squeeze(0))
             decStates.beamUpdate_(beam.getCurrentOrigin())
             if is_done:
                 break
@@ -158,7 +164,7 @@ class Translator(object):
             hyps.append(hyp)
             attn.append(att)
 
-        return [hyps], [scores[:n_best]], [attn]
+        return [hyps], [scores[:n_best]], [attn], [0]
 
     def translate(self, batch, data):
         #  (1) convert words to indexes

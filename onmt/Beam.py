@@ -33,6 +33,9 @@ class Beam(object):
         # The attentions (matrix) for each time.
         self.attn = []
 
+        # Time and k pair for finished.
+        self.finished = []
+        
     def getCurrentState(self):
         "Get the outputs for the current timestep."
         return self.nextYs[-1]
@@ -74,11 +77,17 @@ class Beam(object):
         self.nextYs.append(bestScoresId - prevK * numWords)
         self.attn.append(attnOut.index_select(0, prevK))
 
-        # End condition is when top-of-beam is EOS.
+
+        for i in range(self.nextYs[-1].size(0)):
+            if self.nextYs[-1][i]  == self.vocab.stoi[onmt.IO.EOS_WORD]:
+                self.finished.append(i)
+
+        # End condition is when top-of-beam is EOS.        
         if self.nextYs[-1][0] == self.vocab.stoi[onmt.IO.EOS_WORD]:
             self.done = True
             self.allScores.append(self.scores)
 
+            
         return self.done
 
     def sortBest(self):
