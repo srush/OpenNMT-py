@@ -5,14 +5,6 @@ import onmt
 """
  Class for managing the internals of the beam search process.
 
-
-         hyp1-hyp1---hyp1 -hyp1
-                 \             /
-         hyp2 \-hyp2 /-hyp2hyp2
-                               /      \
-         hyp3-hyp3---hyp3 -hyp3
-         ========================
-
  Takes care of beams, back pointers, and scores.
 """
 
@@ -91,11 +83,6 @@ class Beam(object):
 
     def sortBest(self):
         return torch.sort(self.scores, 0, True)
-
-    def getBest(self):
-        "Get the score of the best in the beam."
-        scores, ids = self.sortBest()
-        return scores[1], ids[1]
 
     def getHyp(self, k):
         """
