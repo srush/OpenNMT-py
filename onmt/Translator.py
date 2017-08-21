@@ -55,13 +55,11 @@ class Translator(object):
         tgt_eos = vocab.stoi[onmt.IO.EOS_WORD]
         tokens = []
         for tok in pred:
-            if tok != tgt_eos:
-                if tok < len(vocab):
-                    tokens.append(vocab.itos[tok])
-                else:
-                    tokens.append(copy_vocab.itos[tok - len(vocab)])
+            if tok < len(vocab):
+                tokens.append(vocab.itos[tok])
+            else:
+                tokens.append(copy_vocab.itos[tok - len(vocab)])
 
-        print()
         tokens = tokens[:-1]  # EOS
         if self.opt.replace_unk:
             for i in range(len(tokens)):
@@ -116,7 +114,7 @@ class Translator(object):
         src = rvar(src.data)
         src_map = rvar(batch.src_map.data)
         decStates.repeatBeam_(beamSize)
-        beam = onmt.Beam(beamSize, cuda=self.opt.cuda,
+        beam = onmt.Beam(beamSize, n_best=self.opt.n_best, cuda=self.opt.cuda,
                          vocab=self.fields["tgt"].vocab)
 
 
@@ -150,21 +148,22 @@ class Translator(object):
                 out = out.squeeze(1).log()
 
             # (c) Advance each beam.
-            is_done = beam.advance(out, attn["std"].data.squeeze(0))
+            is_done = beam.advance(out, attn["copy"].data.squeeze(0))
             decStates.beamUpdate_(beam.getCurrentOrigin())
             if is_done:
                 break
 
         #  (3) package everything up
         n_best = self.opt.n_best
-        scores, ks = beam.sortBest()
+        scores, ks = beam.sortFinished()
         hyps, attn = [], []
-        for k in ks[:n_best]:
-            hyp, att = beam.getHyp(k)
+        for i, (time, k, cb) in enumerate(ks):# [:n_best]:
+            # print(i, scores[i], cb)
+            hyp, att = beam.getHyp(time, k)
             hyps.append(hyp)
             attn.append(att)
 
-        return [hyps], [scores[:n_best]], [attn], [0]
+        return [hyps], [scores], [attn], [0]
 
     def translate(self, batch, data):
         #  (1) convert words to indexes
