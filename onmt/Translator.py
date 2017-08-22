@@ -119,8 +119,9 @@ class Translator(object):
 
 
         #  (2) run the decoder to generate sentences, using beam search
-        for i in range(self.opt.max_sent_length):
-            # Construct batch x beam_size next words.
+        i = 0
+        while i < self.opt.max_sent_length or len(beam.finished) == 0:
+            # Construct batch x beam_size nxt words.
             inp = var(beam.getCurrentState().unsqueeze(0))
             inp = inp.masked_fill(inp.gt(len(self.fields["tgt"].vocab) - 1), 0) # 0 is unk
             # 1 x beam_size
@@ -152,6 +153,7 @@ class Translator(object):
             decStates.beamUpdate_(beam.getCurrentOrigin())
             if is_done:
                 break
+            i += 1
 
         #  (3) package everything up
         n_best = self.opt.n_best
