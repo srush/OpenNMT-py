@@ -39,6 +39,7 @@ class Translator(object):
         self.model = onmt.Models.make_base_model(opt, model_opt, self.fields,
                                                  opt.cuda, checkpoint)
         self.model.eval()
+        self.model.generator.eval()
 
         # for debugging
         self.beam_accum = None
@@ -98,7 +99,7 @@ class Translator(object):
 
     def translateBatch(self, batch, dataset):
         beamSize = self.opt.beam_size
-        batch_size = batch.batch_size
+        batchSize = batch.batch_size
 
         #  (1) run the encoder on the src
         _, src_lengths = batch.src
@@ -113,74 +114,76 @@ class Translator(object):
         # Repeat everything beam_times
         context = rvar(context.data)
         src = rvar(src.data)
-        src_map = rvar(batch.src_map.data)
+        srcMap = rvar(batch.src_map.data)
         decStates.repeatBeam_(beamSize)
         beam = [onmt.Beam(beamSize, n_best=self.opt.n_best, cuda=self.opt.cuda,
-                         vocab=self.fields["tgt"].vocab)
-                for _ in range(batch_size)]
-
+                          vocab=self.fields["tgt"].vocab)
+                for _ in range(batchSize)]
 
         #  (2) run the decoder to generate sentences, using beam search
         i = 0
-        while i < self.opt.max_sent_length or any([len(b.finished) == 0 for b in beam]):
+
+        def bottle(m):
+            return m.view(batchSize * beamSize, -1)
+        def unbottle(m):
+            return m.view(beamSize, batchSize, -1)
+
+        while i < self.opt.max_sent_length \
+              or any([len(b.finished) == 0 for b in beam]):
             # Construct batch x beam_size nxt words.
-            #inp = var(beam.getCurrentState().unsqueeze(0))
-
             # Get all the pending current beam words and arrange for forward.
-            inp = var(torch.stack([b.getCurrentState().unsqueeze(0) for b in beam])
+            inp = var(torch.stack([b.getCurrentState() for b in beam])
                       .t().contiguous().view(1, -1))
-
+            
             # Turn any copied words to UNKs
             # 0 is unk
             if self.copy_attn:
                 inp = inp.masked_fill(inp.gt(len(self.fields["tgt"].vocab) - 1), 0)
-
-
+                            
             # Run one step.
             decOut, decStates, attn = \
                 self.model.decoder(inp, src, context, decStates)
             decOut = decOut.squeeze(0)
             # decOut: beam x rnn_size
-
+            
             # (b) Compute a vector of batch*beam word scores.
             if not self.copy_attn:
                 out = self.model.generator.forward(decOut).data
+                out = unbottle(out)
                 # beam x tgt_vocab
-            else:
-                attn_copy = attn["copy"].view(beamSize, batch_size, -1) \
-                            .transpose(0, 1).contiguous()
-
-                out = self.model.generator.forward(
-                    decOut, attn_copy.view(-1, src.size(0)), src_map)
+            else:                
+                out = self.model.generator.forward(decOut, attn["copy"].squeeze(0),
+                                                   srcMap)
                 # beam x (tgt_vocab + extra_vocab)
-                # out = out.data.unsqueeze(1)
                 out = dataset.collapseCopyScores(
-                    out.data.view(batch_size, beamSize, -1).transpose(0, 1),
+                    unbottle(out.data),
                     batch, self.fields["tgt"].vocab)
                 # beam x tgt_vocab
-                out = out.log().transpose(0, 1).contiguous().view(beamSize * batch_size, -1)
-                word_scores = out.view(beamSize, batchSize, -1) \
-                                 .transpose(0, 1).contiguous()
+                out = out.log()
+
             # (c) Advance each beam.
-            for b in beam:
-                is_done = b.advance(word_scores, attn["copy"].data.squeeze(0))
-                decStates.beamUpdate_(b, beam.getCurrentOrigin(), beam_size)
+            for j, b in enumerate(beam):
+                is_done = b.advance(out[:, j], unbottle(attn["copy"]).data[:, j])
+                decStates.beamUpdate_(j, b.getCurrentOrigin(), beamSize)
                 if is_done:
                     break
             i += 1
 
         #  (3) package everything up
+        allHyps, allScores, allAttn, allGold = [], [], [], [] 
         for b in beam:
             n_best = self.opt.n_best
             scores, ks = b.sortFinished()
             hyps, attn = [], []
-            for i, (time, k, cb) in enumerate(ks):# [:n_best]:
-                # print(i, scores[i], cb)
-                hyp, att = b.getHyp(time, k)
+            for i, (times, k) in enumerate(ks):# [:n_best]:
+                hyp, att = b.getHyp(times, k)
                 hyps.append(hyp)
                 attn.append(att)
-
-        return [hyps], [scores], [attn], [0]
+            allHyps.append(hyps)
+            allScores.append(scores)
+            allAttn.append(attn)
+            allGold.append(0)
+        return allHyps, allScores, allAttn, allGold
 
     def translate(self, batch, data):
         #  (1) convert words to indexes
