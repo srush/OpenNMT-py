@@ -70,8 +70,6 @@ class Translator(object):
         return tokens
 
     def _runTarget(self, batch, data):
-        if "tgt" not in batch.__dict__:
-            return None
 
         _, src_lengths = batch.src
         src = make_features(batch, self.fields)
@@ -122,7 +120,6 @@ class Translator(object):
 
         #  (2) run the decoder to generate sentences, using beam search
         i = 0
-
         def bottle(m):
             return m.view(batchSize * beamSize, -1)
         def unbottle(m):
@@ -168,9 +165,15 @@ class Translator(object):
                 if is_done:
                     break
             i += 1
+            
+        if "tgt" in batch.__dict__:
+            allGold = self._runTarget(batch, dataset)
+        else:
+            allGold = [0] * batchSize
 
+            
         #  (3) package everything up
-        allHyps, allScores, allAttn, allGold = [], [], [], [] 
+        allHyps, allScores, allAttn = [], [], []
         for b in beam:
             n_best = self.opt.n_best
             scores, ks = b.sortFinished()
@@ -182,7 +185,7 @@ class Translator(object):
             allHyps.append(hyps)
             allScores.append(scores)
             allAttn.append(attn)
-            allGold.append(0)
+            
         return allHyps, allScores, allAttn, allGold
 
     def translate(self, batch, data):
