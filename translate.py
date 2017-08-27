@@ -2,16 +2,17 @@ from __future__ import division
 from builtins import bytes
 
 import onmt
+import onmt.Markdown
 import onmt.IO
 import torch
 import argparse
 import math
 import codecs
 import os
-import opts
+from train_opts import add_model_arguments
 
 parser = argparse.ArgumentParser(description='translate.py')
-opts.add_md_help_argument(parser)
+onmt.Markdown.add_md_help_argument(parser)
 
 parser.add_argument('-model', required=True,
                     help='Path to model .pt file')
@@ -66,10 +67,9 @@ def reportScore(name, scoreTotal, wordsTotal):
 
 def main():
     opt = parser.parse_args()
-
     dummy_parser = argparse.ArgumentParser(description='train.py')
-    opts.model_opts(dummy_parser)
-    dummy_opt = dummy_parser.parse_known_args([])[0]
+    add_model_arguments(dummy_parser)
+    dummy_opt = dummy_parser.parse_known_args()[0]
 
     opt.cuda = opt.gpu > -1
     if opt.cuda:
@@ -86,7 +86,7 @@ def main():
     data = onmt.IO.ONMTDataset(opt.src, opt.tgt, translator.fields, None)
 
     testData = onmt.IO.OrderedIterator(
-        dataset=data, device=opt.gpu,
+        dataset=data, device=opt.gpu if opt.gpu else -1,
         batch_size=opt.batch_size, train=False, sort=False,
         shuffle=False)
 
@@ -112,6 +112,10 @@ def main():
             outF.flush()
 
             if opt.verbose:
+                # print(srcBatch[b])
+                # srcSent = ' '.join(srcBatch[b])
+                # if translator.tgt_dict.lower:
+                #     srcSent = srcSent.lower()
                 words = []
                 for f in src[:, b]:
                     word = translator.fields["src"].vocab.itos[f]
@@ -121,6 +125,9 @@ def main():
 
                 os.write(1, bytes('SENT %d: %s\n' %
                                   (count, " ".join(words)), 'UTF-8'))
+                # ex = data.examples[index]
+                # print(index, list(zip(ex.src, ex.src_feat_0, ex.src_feat_1,
+                #                       ex.src_feat_2)))
 
                 index += 1
                 print(len(predBatch[b][0]))
@@ -130,6 +137,8 @@ def main():
 
                 if opt.tgt:
                     tgtSent = ' '.join(tgtBatch[b])
+                    if translator.tgt_dict.lower:
+                        tgtSent = tgtSent.lower()
                     os.write(1, bytes('GOLD %d: %s\n' %
                              (count, tgtSent), 'UTF-8'))
                     print("GOLD SCORE: %.4f" % goldScore[b])
