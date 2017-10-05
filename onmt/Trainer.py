@@ -118,13 +118,26 @@ class Trainer(object):
                 outputs, attns, dec_state = \
                     self.model(src, tgt, src_lengths, dec_state)
 
-                # 3. Compute loss in shards for memory efficiency.
-                batch_stats = self.train_loss.sharded_compute_loss(
-                        batch, outputs, attns, j,
-                        trunc_size, self.shard_size)
+                # 3. Compute loss in a lazy manner.
+                copy_attn = attns.get("copy")
+                print(outputs.size(), j, trunc_size)
+                loss, scores = self.train_loss.compute_loss(batch, outputs, tgt[1:],
+                                                            copy_attn=copy_attn)
+                loss = loss.div(batch.batch_size)
 
-                # 4. Update the parameters and statistics.
+                # 4. Compute shard groups (exploit pytorch lazy)
+                intermediates = [torch.split(v, self.shard_size)
+                                 for v in outputs]
+
+                # 5. Compute backward.
+                d_intermediates = [d_i
+                                   for intermediates_batch in intermediates
+                                   for d_i in torch.autograd.grad(loss, intermediates_batch)]
+                torch.autograd.backward(intermediates, d_intermediates)
+
+                # 6. Update the parameters and statistics.
                 self.optim.step()
+                batch_stats = self.train_loss.stats(loss.data, scores.data, tgt.data)
                 total_stats.update(batch_stats)
                 report_stats.update(batch_stats)
 

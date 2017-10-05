@@ -91,17 +91,16 @@ class NMTLossCompute(LossComputeBase):
     def compute_loss(self, batch, output, target, **kwargs):
         """ See base class for args description. """
         scores = self.generator(self.bottle(output))
-        scores_data = scores.data.clone()
-
         target = target.view(-1)
-        target_data = target.data.clone()
-
+        print(scores.size(), target.size())
         loss = self.criterion(scores, target)
-        loss_data = loss.data.clone()
 
-        stats = self.stats(loss_data, scores_data, target_data)
+        #scores_data = scores.data.clone()
+        #target_data = target.data.clone()
+        #loss_data = loss.data.clone()
+        #stats = self.stats(loss_data, scores_data, target_data)
 
-        return loss, stats
+        return loss, scores
 
 
 def make_gen_state(output, batch, attns, range_, copy_attn=None):
