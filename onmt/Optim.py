@@ -14,7 +14,6 @@ class MultipleOptimizer(object):
         for op in self.optimizers:
             op.step()
 
-
 class Optim(object):
     """
     Controller class for optimization. Mostly a thin
