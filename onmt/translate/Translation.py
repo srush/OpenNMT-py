@@ -133,10 +133,8 @@ class Translation(object):
         """
         Log translation to stdout.
         """
-
-        logging = onmt.io.IO.set_logger('translate.py')
-
         output = '\nSENT {}: {}\n'.format(sent_number, self.src_raw)
+        logging = onmt.io.IO.set_logger('translate.py')
 
         best_pred = self.pred_sents[0]
         best_score = self.pred_scores[0]

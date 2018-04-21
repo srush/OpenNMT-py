@@ -197,13 +197,16 @@ class Translator(object):
                     os.write(1, output.encode('utf-8'))
 
         if self.report_score:
-            self._report_score('PRED', pred_score_total, pred_words_total)
+            logging = onmt.io.IO.set_logger('translate.py')
+            self._report_score(logging, 'PRED',
+                               pred_score_total, pred_words_total)
             if tgt_path is not None:
-                self._report_score('GOLD', gold_score_total, gold_words_total)
+                self._report_score(logging, 'GOLD',
+                                   gold_score_total, gold_words_total)
                 if self.report_bleu:
-                    self._report_bleu(tgt_path)
+                    self._report_bleu(logging, tgt_path)
                 if self.report_rouge:
-                    self._report_rouge(tgt_path)
+                    self._report_rouge(logging, tgt_path)
 
         if self.dump_beam:
             import json
@@ -388,12 +391,12 @@ class Translator(object):
             gold_scores += scores
         return gold_scores
 
-    def _report_score(self, name, score_total, words_total):
+    def _report_score(self, logging, name, score_total, words_total):
         logging.info("%s AVG SCORE: %.4f, %s PPL: %.4f" % (
             name, score_total / words_total,
             name, math.exp(-score_total / words_total)))
 
-    def _report_bleu(self, tgt_path):
+    def _report_bleu(self, logging, tgt_path):
         import subprocess
         path = os.path.split(os.path.realpath(__file__))[0]
         logging.info()
@@ -405,7 +408,7 @@ class Translator(object):
 
         logging.info(">> " + res.strip())
 
-    def _report_rouge(self, tgt_path):
+    def _report_rouge(self, logging, tgt_path):
         import subprocess
         path = os.path.split(os.path.realpath(__file__))[0]
         res = subprocess.check_output(

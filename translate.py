@@ -24,7 +24,5 @@ if __name__ == "__main__":
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     onmt.opts.add_md_help_argument(parser)
     onmt.opts.translate_opts(parser)
-
     opt = parser.parse_args()
-    logging = onmt.io.IO.set_logger('translate.py')
     main(opt)
